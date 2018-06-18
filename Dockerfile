@@ -10,8 +10,6 @@ RUN git clone https://github.com/picrust/picrust2.git
 
 WORKDIR /picrust2/placement_tools
 
-RUN ls
-
 RUN tar -xzf papara_nt-2.5.tar.gz &&\
 	cd papara_nt-2.5 &&\
 	sh build_papara2.sh &&\
@@ -33,8 +31,7 @@ RUN echo ". /opt/conda/etc/profile.d/conda.sh" > ~/.bashrc
 RUN ["/bin/bash", "-c", "conda env create -f dev-environment.yml"]
 RUN echo "source activate picrust2-dev" >> ~/.bashrc 
 RUN ["/bin/bash", "-c",". ~/.bashrc && source activate picrust2-dev && pip install --editable ."]
-RUN [ "/bin/bash", "-c", ". ~/.bashrc && source activate picrust2-dev"]
-ADD entry.sh .
-RUN ls
+RUN wget https://raw.githubusercontent.com/gsmashd/picrust2/master/entry.sh && chmod 755 entry.sh
+
 ENTRYPOINT ["/bin/bash","entry.sh"]
 CMD ["conda list"]
