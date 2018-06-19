@@ -29,8 +29,8 @@ WORKDIR /picrust2
 
 RUN echo ". /opt/conda/etc/profile.d/conda.sh" > ~/.bashrc 
 RUN ["/bin/bash", "-c", "conda env create -f dev-environment.yml"]
-RUN echo "source activate picrust2-dev" >> ~/.bashrc 
-RUN ["/bin/bash", "-c",". ~/.bashrc && source activate picrust2-dev && pip install --editable ."]
+RUN echo "conda activate picrust2-dev" >> ~/.bashrc 
+RUN ["/bin/bash", "-c",". ~/.bashrc && pip install --editable ."]
 RUN wget https://raw.githubusercontent.com/gsmashd/picrust2/master/entry.sh && chmod 755 entry.sh
 
 ENTRYPOINT ["/bin/bash","entry.sh"]
