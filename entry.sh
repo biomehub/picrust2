@@ -1,5 +1,5 @@
 #!/bin/bash
 
-. ~/.bashrc
+#. ~/.bashrc
 
-/bin/bash -c "$@"
+/bin/bash -c ". /opt/conda/etc/profile.d/conda.sh && conda acitvate picrust2-dev && $@"

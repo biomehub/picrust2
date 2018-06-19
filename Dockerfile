@@ -31,7 +31,13 @@ RUN echo ". /opt/conda/etc/profile.d/conda.sh" > ~/.bashrc
 RUN ["/bin/bash", "-c", "conda env create -f dev-environment.yml"]
 RUN echo "conda activate picrust2-dev" >> ~/.bashrc 
 RUN ["/bin/bash", "-c",". ~/.bashrc && pip install --editable ."]
+
+RUN mkdir /custom-scripts
+WORKDIR /custom-scripts
 RUN wget https://raw.githubusercontent.com/gsmashd/picrust2/master/entry.sh && chmod 755 entry.sh
+RUN ln -s /custom-scripts/entry.sh /bin/entry.sh
+
+WORKDIR /
 
 ENTRYPOINT ["/bin/bash","entry.sh"]
 CMD ["conda list"]
