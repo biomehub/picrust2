@@ -1,8 +1,8 @@
-FROM continuumio/miniconda3
+FROM python:3.6.5-stretch
 
 ENTRYPOINT ["/bin/bash", "-c"]
 
-RUN apt update && apt upgrade -y && apt install -y autotools-dev libtool flex bison cmake automake autoconf vim git tar g++
+RUN apt update && apt upgrade -y && apt install -y autotools-dev libtool flex bison cmake automake autoconf git tar g++
 
 RUN apt install -y libboost-all-dev
 
@@ -25,19 +25,16 @@ RUN tar -xzf gappa.tar.gz &&\
 	make &&\
 	ln -s $PWD/bin/gappa /bin/
 
-WORKDIR /picrust2
-
-RUN echo ". /opt/conda/etc/profile.d/conda.sh" > ~/.bashrc 
-RUN ["/bin/bash", "-c", "conda env create -f dev-environment.yml"]
-RUN echo "conda activate picrust2-dev" >> ~/.bashrc 
-RUN ["/bin/bash", "-c",". ~/.bashrc && pip install --editable ."]
-
-RUN mkdir /custom-scripts
-WORKDIR /custom-scripts
-RUN wget https://raw.githubusercontent.com/gsmashd/picrust2/master/entry.sh && chmod 755 entry.sh
-RUN ln -s /custom-scripts/entry.sh /bin/entry.sh
-
 WORKDIR /
+RUN apt update && apt upgrade -y && apt install -y r-base python3-h5py python3-pip python3-joblib glpk-utils libglpk-dev
+RUN pip3 install numpy && pip3 install biom-format pytest pytest-cov
 
-ENTRYPOINT ["/bin/bash","entry.sh"]
-CMD ["conda list"]
+RUN mkdir /r-libs
+RUN cd /r-libs && wget https://cran.r-project.org/src/contrib/naturalsort_0.1.3.tar.gz && wget https://cran.r-project.org/src/contrib/castor_1.3.3.tar.gz && wget https://cran.r-project.org/src/contrib/Rcpp_0.12.17.tar.gz
+
+RUN R CMD INSTALL /r-libs/Rcpp_0.12.17.tar.gz
+RUN R CMD INSTALL /r-libs/naturalsort_0.1.3.tar.gz
+RUN R CMD INSTALL /r-libs/castor_1.3.3.tar.gz
+
+RUN cd /picrust2 && pip install --editable . && pytest
+
