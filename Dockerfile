@@ -28,6 +28,14 @@ RUN wget https://github.com/lczech/gappa/archive/v0.4.0.tar.gz &&\
 	make &&\
 	cp bin/gappa /bin/
 
+RUN wget http://eddylab.org/software/hmmer/hmmer-3.2.1.tar.gz &&\
+	tar -xzf hmmer-3.2.1.tar.gz &&\
+        cd hmmer-3.2.1 &&\
+        ./configure &&\
+        make &&\
+        make check &&\
+	make install
+
 WORKDIR /
 RUN apt update && apt upgrade -y &&\
 	apt install -y r-base python3-h5py python3-pip python3-joblib glpk-utils libglpk-dev
