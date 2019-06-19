@@ -35,12 +35,15 @@ RUN pip3 install --upgrade pip &&\
 	pip3 install numpy && pip3 install biom-format pytest pytest-cov
 
 RUN mkdir /r-libs
-RUN cd /r-libs && wget https://cran.r-project.org/src/contrib/naturalsort_0.1.3.tar.gz &&\
+RUN cd /r-libs &&\
+	wget https://cran.r-project.org/src/contrib/naturalsort_0.1.3.tar.gz &&\
 	wget https://cran.r-project.org/src/contrib/castor_1.4.1.tar.gz &&\
-	wget https://cran.r-project.org/src/contrib/Rcpp_1.0.1.tar.gz
+	wget https://cran.r-project.org/src/contrib/Rcpp_1.0.1.tar.gz &&\
+	wget https://cran.r-project.org/src/contrib/nloptr_1.2.1.tar.gz
 
 RUN R CMD INSTALL /r-libs/Rcpp_1.0.1.tar.gz
 RUN R CMD INSTALL /r-libs/naturalsort_0.1.3.tar.gz
+RUN R CMD INSTALL /r-libs/nloptr_1.2.1.tar.gz
 RUN R CMD INSTALL /r-libs/castor_1.4.1.tar.gz
 
 RUN cd /picrust2 && pip install --editable . && pytest
