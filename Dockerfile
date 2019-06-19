@@ -12,12 +12,12 @@ RUN git clone https://github.com/picrust/picrust2.git
 
 WORKDIR /picrust2/placement_tools
 
-RUN tar -xzf papara_nt-2.5.tar.gz &&\
-	cd papara_nt-2.5 &&\
-	sh build_papara2.sh &&\
-	ln -s $PWD/papara /bin/
+RUN wget https://cme.h-its.org/exelixis/resource/download/software/papara_nt-2.5-static_x86_64.tar.gz &&\
+	tar -xzf papara_nt-2.5-static_x86_64.tar.gz &&\
+	mv papara_static_x86_64 /bin/papara
 
-RUN tar -xzf epa-ng.tar.gz &&\
+RUN wget https://github.com/Pbdas/epa-ng/archive/v0.3.5.tar.gz &&\
+	tar -xzf epa-ng.tar.gz &&\
 	cd epa-ng/ &&\
 	make &&\ 
 	ln -s $PWD/bin/epa-ng /bin/
