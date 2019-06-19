@@ -1,3 +1,5 @@
+# From https://github.com/gsmashd/picrust2
+
 FROM python:3.6.5-stretch
 
 ENTRYPOINT ["/bin/bash", "-c"]
