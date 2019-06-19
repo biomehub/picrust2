@@ -17,8 +17,8 @@ RUN wget https://cme.h-its.org/exelixis/resource/download/software/papara_nt-2.5
 	mv papara_static_x86_64 /bin/papara
 
 RUN wget https://github.com/Pbdas/epa-ng/archive/v0.3.5.tar.gz &&\
-	tar -xzf epa-ng.tar.gz &&\
-	cd epa-ng/ &&\
+	tar -xzf v0.3.5.tar.gz &&\
+	cd epa-ng-0.3.5/ &&\
 	make &&\ 
 	ln -s $PWD/bin/epa-ng /bin/
 
