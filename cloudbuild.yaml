@@ -1,0 +1,19 @@
+steps:
+
+  - id: build-docker-image
+    name: 'gcr.io/cloud-builders/docker'
+    args: ['build',
+        '--build-arg=INSTANCE_NAME=${_INSTANCE_NAME}',
+        '-f', 'Dockerfile',
+        '-t', 'gcr.io/$PROJECT_ID/${_INSTANCE_NAME}:$TAG_NAME',
+        '.',
+    ]
+  
+  - id: push-docker-image
+    name: gcr.io/cloud-builders/docker
+    args: ["push", "gcr.io/$PROJECT_ID/${_INSTANCE_NAME}:$TAG_NAME"]
+    waitFor:
+      - build-docker-image
+
+images:
+- 'gcr.io/$PROJECT_ID/${_INSTANCE_NAME}:$TAG_NAME'
