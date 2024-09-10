@@ -12,7 +12,7 @@ ENV GLPK_VERSION=4.65
 ENV HMMER_VERSION=3.1b2
 ENV SEPP_VERSION=4.3.10
 
-ENTRYPOINT ["/bin/bash", "-c"]
+#ENTRYPOINT ["/bin/bash", "-c"]
 
 # base libs
 RUN apt-get update -y; \
